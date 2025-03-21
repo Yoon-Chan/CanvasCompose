@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -26,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -34,11 +37,17 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.canvas.ui.theme.CanvasTheme
+import com.example.canvas.weigthpicker.Scale
+import com.example.canvas.weigthpicker.ScaleStyle
 import kotlinx.coroutines.delay
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -52,9 +61,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             CanvasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MainScreen(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+//                    MainScreen(
+//                        modifier = Modifier.padding(innerPadding)
+//                    )
+
+
 //                    MyCanvas(modifier = Modifier.padding(innerPadding))
 //                    Box(
 //                        modifier = Modifier
@@ -64,6 +75,59 @@ class MainActivity : ComponentActivity() {
 //                            }
 //                            .padding(innerPadding)
 //                    )
+
+                    //DrawingText
+//                    DrawingText(modifier = Modifier.padding(innerPadding))
+
+                    //WeightPicker
+                    var weight by remember {
+                        mutableStateOf(80)
+                    }
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = "Select your weight",
+                            fontSize = 36.sp,
+                        )
+
+                        val text = buildAnnotatedString {
+                            withStyle(SpanStyle(fontSize = 54.sp)) {
+                                append("$weight ")
+                            }
+
+                            withStyle(SpanStyle(fontSize = 32.sp, color = Color.Green)) {
+                                append("KG")
+                            }
+                        }
+                        Text(
+                            modifier = Modifier.weight(1f),
+                        text =    text
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .weight(4f)
+                        ) {
+                            Scale(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(300.dp)
+                                    .align(Alignment.BottomCenter),
+                                style = ScaleStyle(
+                                    scaleWidth = 200.dp
+                                )
+                            ) {
+                                weight = it
+                            }
+                        }
+                    }
                 }
             }
         }

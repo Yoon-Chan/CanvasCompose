@@ -49,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.canvas.clock.Clock
+import com.example.canvas.path.AnimatePathArrow
 import com.example.canvas.path.PathAnimation
 import com.example.canvas.path.PathCanvas
 import com.example.canvas.path.PathOperations
@@ -103,7 +104,10 @@ class MainActivity : ComponentActivity() {
 //                    )
 
                     //PathAnimation
-                    PathAnimation(modifier = Modifier.fillMaxSize().padding(innerPadding))
+//                    PathAnimation(modifier = Modifier.fillMaxSize().padding(innerPadding))
+
+                    //AnimatePathArrow
+                    AnimatePathArrow(modifier = Modifier.fillMaxSize().padding(innerPadding))
                 }
 
             }

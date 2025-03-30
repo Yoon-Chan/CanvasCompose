@@ -6,6 +6,7 @@ import android.os.CountDownTimer
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -48,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.canvas.clock.Clock
+import com.example.canvas.path.PathAnimation
 import com.example.canvas.path.PathCanvas
 import com.example.canvas.path.PathOperations
 import com.example.canvas.ui.theme.CanvasTheme
@@ -66,6 +68,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CanvasTheme {
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 //                    MainScreen(
 //                        modifier = Modifier.padding(innerPadding)
@@ -95,9 +98,12 @@ class MainActivity : ComponentActivity() {
 //                    PathCanvas(modifier = Modifier.fillMaxSize().padding(innerPadding))
 
                     //PathOperation
-                    PathOperations(
-                        modifier = Modifier.fillMaxSize().padding(innerPadding)
-                    )
+//                    PathOperations(
+//                        modifier = Modifier.fillMaxSize().padding(innerPadding)
+//                    )
+
+                    //PathAnimation
+                    PathAnimation(modifier = Modifier.fillMaxSize().padding(innerPadding))
                 }
 
             }

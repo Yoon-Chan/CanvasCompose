@@ -48,6 +48,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.canvas.clock.Clock
+import com.example.canvas.path.PathCanvas
+import com.example.canvas.path.PathOperations
 import com.example.canvas.ui.theme.CanvasTheme
 import com.example.canvas.weigthpicker.Scale
 import com.example.canvas.weigthpicker.ScaleStyle
@@ -87,8 +89,17 @@ class MainActivity : ComponentActivity() {
 //                    WeightPicker(innerPadding)
 
                     //Clock
-                    ClockBox(modifier = Modifier.padding(innerPadding))
+//                    ClockBox(modifier = Modifier.padding(innerPadding))
+
+                    //PathCanvas
+//                    PathCanvas(modifier = Modifier.fillMaxSize().padding(innerPadding))
+
+                    //PathOperation
+                    PathOperations(
+                        modifier = Modifier.fillMaxSize().padding(innerPadding)
+                    )
                 }
+
             }
         }
     }

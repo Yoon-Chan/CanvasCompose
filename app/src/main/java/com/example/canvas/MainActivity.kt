@@ -53,6 +53,7 @@ import com.example.canvas.path.AnimatePathArrow
 import com.example.canvas.path.PathAnimation
 import com.example.canvas.path.PathCanvas
 import com.example.canvas.path.PathOperations
+import com.example.canvas.path.TransFormationAndClipping
 import com.example.canvas.ui.theme.CanvasTheme
 import com.example.canvas.weigthpicker.Scale
 import com.example.canvas.weigthpicker.ScaleStyle
@@ -107,7 +108,10 @@ class MainActivity : ComponentActivity() {
 //                    PathAnimation(modifier = Modifier.fillMaxSize().padding(innerPadding))
 
                     //AnimatePathArrow
-                    AnimatePathArrow(modifier = Modifier.fillMaxSize().padding(innerPadding))
+//                    AnimatePathArrow(modifier = Modifier.fillMaxSize().padding(innerPadding))
+
+                    //TransFormationAndClipping
+                    TransFormationAndClipping(modifier = Modifier.fillMaxSize().padding(innerPadding))
                 }
 
             }

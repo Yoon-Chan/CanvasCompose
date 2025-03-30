@@ -52,6 +52,7 @@ import com.example.canvas.clock.Clock
 import com.example.canvas.path.AnimatePathArrow
 import com.example.canvas.path.PathAnimation
 import com.example.canvas.path.PathCanvas
+import com.example.canvas.path.PathEffect
 import com.example.canvas.path.PathOperations
 import com.example.canvas.path.TransFormationAndClipping
 import com.example.canvas.ui.theme.CanvasTheme
@@ -111,7 +112,10 @@ class MainActivity : ComponentActivity() {
 //                    AnimatePathArrow(modifier = Modifier.fillMaxSize().padding(innerPadding))
 
                     //TransFormationAndClipping
-                    TransFormationAndClipping(modifier = Modifier.fillMaxSize().padding(innerPadding))
+//                    TransFormationAndClipping(modifier = Modifier.fillMaxSize().padding(innerPadding))
+
+                    //PathEffect
+                    PathEffect(modifier = Modifier.fillMaxSize().padding(innerPadding))
                 }
 
             }

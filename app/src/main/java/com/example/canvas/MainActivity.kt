@@ -54,6 +54,7 @@ import com.example.canvas.path.PathAnimation
 import com.example.canvas.path.PathCanvas
 import com.example.canvas.path.PathEffect
 import com.example.canvas.path.PathOperations
+import com.example.canvas.path.PathText
 import com.example.canvas.path.TransFormationAndClipping
 import com.example.canvas.ui.theme.CanvasTheme
 import com.example.canvas.weigthpicker.Scale
@@ -115,7 +116,10 @@ class MainActivity : ComponentActivity() {
 //                    TransFormationAndClipping(modifier = Modifier.fillMaxSize().padding(innerPadding))
 
                     //PathEffect
-                    PathEffect(modifier = Modifier.fillMaxSize().padding(innerPadding))
+//                    PathEffect(modifier = Modifier.fillMaxSize().padding(innerPadding))
+
+                    //PathText
+                    PathText(modifier = Modifier.fillMaxSize().padding(innerPadding))
                 }
 
             }

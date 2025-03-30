@@ -57,7 +57,7 @@ fun Scale(
         modifier = modifier
             .pointerInput(true) {
                 detectDragGestures(
-                    onDragStart =  { offset ->
+                    onDragStart = { offset ->
                         dragStartedAngle = atan2(
                             y = circleCenter.x - offset.x,
                             x = circleCenter.y - offset.y
@@ -82,10 +82,11 @@ fun Scale(
             }
     ) {
         center = this.center
-        circleCenter  = Offset(center.x, scaleWidth.toPx() / 2f + radius.toPx())
+        circleCenter = Offset(center.x, scaleWidth.toPx() / 2f + radius.toPx())
 
         val outerRadius = radius.toPx() + scaleWidth.toPx() / 2
         val innerRadius = radius.toPx() - scaleWidth.toPx() / 2
+
 
         drawContext.canvas.nativeCanvas.apply {
             drawCircle(
@@ -107,20 +108,20 @@ fun Scale(
         }
 
         // Draw lines
-        for(i in minWeight..maxWeight) {
-            val angleInRad = (i - initialWeight + angle - 90) * (PI / 180f).toFloat()
+        for (i in minWeight..maxWeight) {
+            val angleInRad = (i - initialWeight - 90) * (PI / 180f).toFloat()
             val lineType = when {
                 i % 10 == 0 -> LineType.TenStep
                 i % 5 == 0 -> LineType.FiveStep
                 else -> LineType.Normal
             }
-            val lineLength = when(lineType) {
+            val lineLength = when (lineType) {
                 LineType.Normal -> style.normalLineLength.toPx()
                 LineType.FiveStep -> style.fiveStepLineLength.toPx()
                 LineType.TenStep -> style.tenStepLineLength.toPx()
             }
 
-            val lineColor = when(lineType) {
+            val lineColor = when (lineType) {
                 LineType.Normal -> style.normalLineColor
                 LineType.FiveStep -> style.fiveStepLineColor
                 LineType.TenStep -> style.tenStepLineColor
@@ -137,8 +138,9 @@ fun Scale(
             )
 
             drawContext.canvas.nativeCanvas.apply {
-                if(lineType is LineType.TenStep) {
-                    val textRadius = (outerRadius - lineLength - 5.dp.toPx() - style.textSize.toPx())
+                if (lineType is LineType.TenStep) {
+                    val textRadius =
+                        (outerRadius - lineLength - 5.dp.toPx() - style.textSize.toPx())
                     val x = textRadius * cos(angleInRad) + circleCenter.x
                     val y = textRadius * sin(angleInRad) + circleCenter.y
                     withRotation(
@@ -158,37 +160,38 @@ fun Scale(
                     }
                 }
             }
+
             drawLine(
                 color = lineColor,
                 start = lineStart,
                 end = lineEnd,
                 strokeWidth = 1.dp.toPx()
             )
-
-            val middleTop = Offset(
-                x = circleCenter.x,
-                y = circleCenter.y - innerRadius - style.scaleIndicatorLength.toPx()
-            )
-            val bottomLeft = Offset(
-                x = circleCenter.x - 4f,
-                y = circleCenter.y - innerRadius
-            )
-            val bottomRight = Offset(
-                x = circleCenter.x + 4f,
-                y = circleCenter.y - innerRadius
-            )
-
-            val indicator = Path().apply {
-                moveTo(middleTop.x, middleTop.y)
-                lineTo(bottomLeft.x, bottomLeft.y)
-                lineTo(bottomRight.x, bottomRight.y)
-                lineTo(middleTop.x, middleTop.y)
-            }
-
-            drawPath(
-                path = indicator,
-                color = style.scaleIndicatorColor
-            )
         }
+
+        val middleTop = Offset(
+            x = circleCenter.x,
+            y = circleCenter.y - innerRadius - style.scaleIndicatorLength.toPx()
+        )
+        val bottomLeft = Offset(
+            x = circleCenter.x - 4f,
+            y = circleCenter.y - innerRadius
+        )
+        val bottomRight = Offset(
+            x = circleCenter.x + 4f,
+            y = circleCenter.y - innerRadius
+        )
+
+        val indicator = Path().apply {
+            moveTo(middleTop.x, middleTop.y)
+            lineTo(bottomLeft.x, bottomLeft.y)
+            lineTo(bottomRight.x, bottomRight.y)
+            lineTo(middleTop.x, middleTop.y)
+        }
+
+        drawPath(
+            path = indicator,
+            color = style.scaleIndicatorColor
+        )
     }
 }

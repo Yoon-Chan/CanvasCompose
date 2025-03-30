@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,6 +37,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -45,12 +47,14 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.canvas.clock.Clock
 import com.example.canvas.ui.theme.CanvasTheme
 import com.example.canvas.weigthpicker.Scale
 import com.example.canvas.weigthpicker.ScaleStyle
 import kotlinx.coroutines.delay
 import kotlin.math.pow
 import kotlin.math.roundToInt
+import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.random.Random
 
@@ -80,54 +84,98 @@ class MainActivity : ComponentActivity() {
 //                    DrawingText(modifier = Modifier.padding(innerPadding))
 
                     //WeightPicker
-                    var weight by remember {
-                        mutableStateOf(80)
-                    }
+//                    WeightPicker(innerPadding)
 
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = "Select your weight",
-                            fontSize = 36.sp,
-                        )
+                    //Clock
+                    ClockBox(modifier = Modifier.padding(innerPadding))
+                }
+            }
+        }
+    }
 
-                        val text = buildAnnotatedString {
-                            withStyle(SpanStyle(fontSize = 54.sp)) {
-                                append("$weight ")
-                            }
+    @Composable
+    fun ClockBox(modifier: Modifier = Modifier) {
+        Box(
+            modifier = modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            val milliseconds = remember {
+                System.currentTimeMillis()
+            }
+            var seconds by remember {
+                mutableStateOf((milliseconds / 1000f) % 60f)
+            }
 
-                            withStyle(SpanStyle(fontSize = 32.sp, color = Color.Green)) {
-                                append("KG")
-                            }
-                        }
-                        Text(
-                            modifier = Modifier.weight(1f),
-                        text =    text
-                        )
+            var minutes by remember {
+                mutableStateOf(((milliseconds / 1000f) / 60) % 60f)
+            }
 
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .weight(4f)
-                        ) {
-                            Scale(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(300.dp)
-                                    .align(Alignment.BottomCenter),
-                                style = ScaleStyle(
-                                    scaleWidth = 200.dp
-                                )
-                            ) {
-                                weight = it
-                            }
-                        }
-                    }
+            var hours by remember {
+                mutableStateOf((milliseconds / 1000f) / 3600f + 2f)
+            }
+
+            LaunchedEffect(key1 = seconds) {
+                delay(1000L)
+                minutes += 1f / 60f
+                hours += 1f / (60f * 60f * 12f)
+                seconds += 1f
+            }
+
+            Clock(
+                seconds = seconds,
+                minutes = minutes,
+                hours = hours,
+            )
+        }
+    }
+
+    @Composable
+    private fun WeightPicker(innerPadding: PaddingValues) {
+        var weight by remember {
+            mutableStateOf(80)
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = "Select your weight",
+                fontSize = 36.sp,
+            )
+
+            val text = buildAnnotatedString {
+                withStyle(SpanStyle(fontSize = 54.sp)) {
+                    append("$weight ")
+                }
+
+                withStyle(SpanStyle(fontSize = 32.sp, color = Color.Green)) {
+                    append("KG")
+                }
+            }
+            Text(
+                modifier = Modifier.weight(1f),
+                text = text
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(4f)
+            ) {
+                Scale(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                        .align(Alignment.BottomCenter),
+                    style = ScaleStyle(
+                        scaleWidth = 200.dp
+                    )
+                ) {
+                    weight = it
                 }
             }
         }
@@ -239,7 +287,7 @@ fun BallClicker(
             modifier = modifier
                 .fillMaxSize()
                 .pointerInput(enabled) {
-                    if(!enabled) {
+                    if (!enabled) {
                         return@pointerInput
                     }
 
@@ -250,7 +298,7 @@ fun BallClicker(
                                     (it.y - ballPosition.y).pow(2)
                         )
 
-                        if(distance < radius) {
+                        if (distance < radius) {
                             ballPosition = randomOffset(
                                 radius = radius,
                                 width = constraints.maxWidth,

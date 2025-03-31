@@ -49,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.canvas.clock.Clock
+import com.example.canvas.genderpicker.GenderPicker
 import com.example.canvas.path.AnimatePathArrow
 import com.example.canvas.path.PathAnimation
 import com.example.canvas.path.PathCanvas
@@ -119,7 +120,16 @@ class MainActivity : ComponentActivity() {
 //                    PathEffect(modifier = Modifier.fillMaxSize().padding(innerPadding))
 
                     //PathText
-                    PathText(modifier = Modifier.fillMaxSize().padding(innerPadding))
+//                    PathText(modifier = Modifier.fillMaxSize().padding(innerPadding))
+
+                    //GenderPicker
+                    GenderPicker(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+
+                    }
                 }
 
             }

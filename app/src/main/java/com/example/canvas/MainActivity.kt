@@ -57,6 +57,7 @@ import com.example.canvas.path.PathEffect
 import com.example.canvas.path.PathOperations
 import com.example.canvas.path.PathText
 import com.example.canvas.path.TransFormationAndClipping
+import com.example.canvas.tiktaktok.TikTacToe
 import com.example.canvas.ui.theme.CanvasTheme
 import com.example.canvas.weigthpicker.Scale
 import com.example.canvas.weigthpicker.ScaleStyle
@@ -123,12 +124,26 @@ class MainActivity : ComponentActivity() {
 //                    PathText(modifier = Modifier.fillMaxSize().padding(innerPadding))
 
                     //GenderPicker
-                    GenderPicker(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)
-                    ) {
+//                    GenderPicker(
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .padding(innerPadding)
+//                    ) {
+//
+//                    }
 
+                    //TicTacToe
+                    Box(Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)){
+                        TikTacToe(
+                            modifier = Modifier
+                                .align(Alignment.Center),
+                            onNewRound = {},
+                            onPlayerWin = { player ->
+
+                            }
+                        )
                     }
                 }
 
